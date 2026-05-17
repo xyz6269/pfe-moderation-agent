@@ -1,0 +1,6 @@
+transformers==4.40.0
+torchvision
+easyocr
+groq
+Pillow
+starlette<1.0.0
