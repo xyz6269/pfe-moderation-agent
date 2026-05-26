@@ -103,10 +103,18 @@ def tool_classify(image: Image.Image, text: str) -> float:
         logits = model(input_ids, attention_mask, pixel_values)
     return torch.sigmoid(logits).item()
 
-def tool_llm_judge(text: str, prob: float) -> str:
-    prompt = f"""You are a content moderation judge. Analyze the following text extracted from a meme.
 
-Text: {text}
+def tool_llm_judge(image: Image.Image, text: str, prob: float) -> str:
+    import base64, io
+
+    # Convert image to base64
+    buffer = io.BytesIO()
+    image.save(buffer, format="JPEG")
+    img_b64 = base64.b64encode(buffer.getvalue()).decode()
+
+    prompt = f"""You are a content moderation judge. Analyze this meme image and its extracted text.
+
+Extracted text: {text}
 Model hate confidence: {prob:.2f}
 
 Decide:
@@ -117,14 +125,21 @@ Decide:
 Respond in this exact format:
 Decision: [REMOVE/WARN/ALLOW]
 Reason: [one sentence explanation in English]"""
+
     try:
         resp = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}]
+            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            messages=[{
+                "role": "user",
+                "content": [
+                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img_b64}"}},
+                    {"type": "text", "text": prompt}
+                ]
+            }]
         )
         return resp.choices[0].message.content
     except Exception as e:
-        print(f"Groq error: {e}")  # add this
+        print(f"Groq error: {e}")
         return "Decision: REMOVE\nReason: API unavailable, defaulting to safe removal."
 
 # ── Agent ─────────────────────────────────────────────────────────────
