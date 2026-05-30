@@ -155,7 +155,7 @@ def agent_moderate(image: Image.Image, meme_id: int) -> dict:
     log["model_decision"] = f"{model_decision} ({prob*100:.1f}%)"
 
     if 0.4 <= prob < THRESHOLD:
-        llm_raw  = tool_llm_judge(text, prob)
+        llm_raw  = llm_raw = tool_llm_judge(image, text, prob)
         lines    = llm_raw.split("\n")
         decision = next((l.split(":")[-1].strip() for l in lines if "Decision:" in l), "WARN")
         reason   = next((l.split(":", 1)[-1].strip() for l in lines if "Reason:" in l), llm_raw)
