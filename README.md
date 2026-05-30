@@ -12,7 +12,7 @@ pinned: false
 
 # Arabic Multimodal Hate Speech Detection
 
-A multimodal hate speech detection system for memes, combining Arabic text understanding with visual reasoning. The system fuses a fine-tuned MARBERTv2 text encoder with a CLIP ViT-B/32 vision encoder via cross-modal projection, and routes borderline cases to an LLM judge for final moderation decisions.
+A multimodal hate speech detection system for memes, combining Arabic text understanding with visual reasoning. The system fuses a fine-tuned MARBERTv2 text encoder with a CLIP ViT-B/32 vision encoder via cross-modal projection, and routes borderline cases to a VLM judge for final moderation decisions.
 
 ---
 
@@ -42,7 +42,7 @@ Meme Image
                               ┌─────────────────────┴──────────────────────┐
                          conf >= 0.53                              0.4 <= conf < 0.53
                               │                                            │
-                        REMOVE / ALLOW                            LLM Judge (Groq)
+                        REMOVE / ALLOW                            VLM Judge (Groq)
                         (fusion model)                           REMOVE / WARN / ALLOW
 ```
 
@@ -61,9 +61,9 @@ Text and visual features are concatenated into a 1024-dimensional vector and pas
 The agent applies a confidence-based routing policy:
 - `conf >= 0.53` → **REMOVE** (fusion model is confident)
 - `conf < 0.4` → **ALLOW** (fusion model is confident)
-- `0.4 <= conf < 0.53` → escalate to **LLM Judge** (Groq, llama-3.1-8b-instant)
+- `0.4 <= conf < 0.53` → escalate to **VLM Judge** (Groq, meta-llama/llama-4-scout-17b-16e-instruct)
 
-The LLM judge receives the extracted text and model confidence, then returns one of: `REMOVE`, `WARN`, or `ALLOW`, with a one-sentence explanation.
+The VLM judge receives the meme image and the extracted text, then returns one of: `REMOVE`, `WARN`, or `ALLOW`, with a one-sentence explanation.
 
 **Fallback policy**: if the Groq API is unavailable, the system defaults to `REMOVE` to err on the side of safety.
 
