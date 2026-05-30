@@ -1,4 +1,6 @@
 import os
+import base64
+import io
 import gradio as gr
 import spaces
 import torch
@@ -105,7 +107,6 @@ def tool_classify(image: Image.Image, text: str) -> float:
 
 
 def tool_llm_judge(image: Image.Image, text: str, prob: float) -> str:
-    import base64, io
 
     # Convert image to base64
     buffer = io.BytesIO()
