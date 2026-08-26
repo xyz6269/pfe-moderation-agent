@@ -1,6 +1,10 @@
-transformers==4.40.0
+gradio
+spaces
+torch
 torchvision
+transformers
+huggingface_hub
 easyocr
 groq
 Pillow
-starlette<1.0.0
+

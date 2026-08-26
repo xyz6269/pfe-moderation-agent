@@ -26,9 +26,6 @@ Meme Image
     ├──► EasyOCR (text extraction)
     │         │
     │         ▼
-    │    NLLB-200 Translation (EN → AR)
-    │         │
-    │         ▼
     │    MARBERTv2 (text encoder) ──► text features (512d)
     │                                        │
     └──► CLIP ViT-B/32 (vision encoder) ──► visual features (512d)
@@ -88,15 +85,15 @@ Evaluated on the Facebook Hateful Memes dataset (900 test samples).
 
 ### Requirements
 
-- Python 3.10+
+- Python 3.12+
 - CUDA-capable GPU recommended (CPU inference is slow)
 - A Groq API key (free tier available at [console.groq.com](https://console.groq.com))
 
 ### Installation
 
 ```bash
-git clone https://huggingface.co/spaces/xyz6269/arabic-hate-speech-detection
-cd arabic-hate-speech-detection
+git clone https://github.com/xyz6269/pfe-moderation-agent.git 
+cd pfe-moderation-agent 
 pip install -r requirements.txt
 ```
 
@@ -133,14 +130,13 @@ easyocr
 groq
 Pillow
 ```
-* please ignore the requirements.txt file in the repo as that one is different for a reason being that it's what running the model on huggingfaces requires
 ---
 
 ## Dataset
 
 Training data sourced from:
 - [Facebook Hateful Memes Dataset](https://ai.facebook.com/tools/hatefulmemes/) via Kaggle (`parthplc/facebook-hateful-meme-dataset`)
-- [Hateful Memes Expanded](https://huggingface.co/datasets/limjiayi/hateful_memes_expanded)
+- translated data that was used for the training is provided in the `/data` directory as a compressed zip file
 
 Combined dataset: ~9000 training samples after filtering and balancing.
 
