@@ -138,7 +138,7 @@ Training data sourced from:
 - [Facebook Hateful Memes Dataset](https://ai.facebook.com/tools/hatefulmemes/) via Kaggle (`parthplc/facebook-hateful-meme-dataset`)
 - translated data that was used for the training is provided in the `/data` directory as a compressed zip file
 
-Combined dataset: ~9000 training samples after filtering and balancing.
+Combined dataset: ~9000 samples after filtering and balancing.
 
 ---
 
