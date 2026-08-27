@@ -46,7 +46,7 @@ Meme Image
 ### Components
 
 **Text Encoder — MARBERTv2**
-A BERT-based model pre-trained on Arabic dialectal and Modern Standard Arabic. Handles the Arabic text extracted and translated from meme images. Token embeddings are mean-pooled with attention masking and projected to 512 dimensions.
+A BERT-based model pre-trained on Arabic dialectal and Modern Standard Arabic. Handles the Arabic text extracted from meme images. Token embeddings are mean-pooled with attention masking and projected to 512 dimensions.
 
 **Vision Encoder — CLIP ViT-B/32**
 OpenAI's CLIP vision transformer, frozen during training. Extracts visual semantics from the meme image and projects them to 512 dimensions via CLIP's visual projection head.
